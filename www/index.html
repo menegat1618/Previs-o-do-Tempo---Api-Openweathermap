@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src 'self' http://api.openweathermap.org/; img-src 'self' http://openweathermap.org/">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+                
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/jcarousel.css">
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+    	<script type="text/javascript" src="js/bootstrap.js"></script>
+    	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+    	<script type="text/javascript" src="js/jcarousel.js"></script>
+    	<script type="text/javascript" src="js/jquery.jcarousel.min.js"></script>
+        <script type="text/javascript" src="js/lokijs.min.js"></script>
+        
+        <title>Previsão do Tempo</title>
+    </head>
+    
+    <body background="back.jpg">
+    
+        <div class="container">
+        
+    		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cidades Favoritas</h4>
+                  </div>
+                  <div class="modal-body">
+                    <ul id="city-list"></ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row" id="title">
+                <h1>Previsão do Tempo</h1>
+            </div>
+    
+            <div class="row">
+                <div id="form_div" class="col-md-8 col-xs-8 col-sm-8 col-lg-8">
+                    <form class="form-inline" id="form">
+                        <div class="form-group">
+                            <label class="control-label">Pesquise uma cidade:</label>
+                            <input class="form-control" type="text" name="city" placeholder="Ex:Concordia">
+                        </div>
+                        <div class="form-group">
+                        	<input type="radio" class="radio-inline" name="save_city">
+                        	<label>Salvar Cidade</label>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary active" id="search">Submit</button>
+                </div>
+                
+               	<div class="col-md-4 col-xs-4 col-sm-4 col-lg-4"><div  id="buttons">
+                	<button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#myModal">
+  						Favoritos
+					</button>
+                    <button type="button" class="btn btn-primary active" id="clean">
+  						Limpar
+					</button>
+                </div></div>
+            </div>
+    
+            <table class="table table-responsive" id="today">
+                <thead>
+                    <th>Cidade</th>
+                    <th>Temperatura</th>
+                    <th>Mínima-Máxima</th>
+                    <th>Descrição</th>
+                    <th>Ícone</th>
+                    <th>Umidade</th>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td id="city"></td>
+                    <td id="current"></td>
+                    <td id="min-max"></td>
+                    <td id="description"></td>
+                    <td><img src="" id="current_icon"/></td>
+                    <td id="humidity"></td>
+                  </tr>
+                </tbody>
+            </table>
+              <div class="row jcarousel-wrapper">
+                <div id="forecast" class="jcarousel">
+                  <ul>
+                    <li style="border-left:none"><div id="1"><p id="p1"></p><img src="" id="icon1"/></div></li>
+                    <li><div id="2"><p id="p2"></p><img src="" id="icon2"/></div></li>
+                    <li><div id="3"><p id="p3"></p><img src="" id="icon3"/></div></li>
+                    <li><div id="4"><p id="p4"></p><img src="" id="icon4"/></div></li>
+                    <li><div id="5"><p id="p5"></p><img src="" id="icon5"/></div></li>
+                    <li style="border-right:none"><div id="6"><p id="p6"></p><img src="" id="icon6"/></div></li>
+                  </ul>
+                </div>
+                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+          </div>
+    
+            <div id="forecast-data">
+                <table class="table table-responsive table-condensed">
+                    <thead>
+                        <th>Hora</th>
+                    <th>Temperatura</th>
+                    <th>Mínima-Máxima</th>
+                    <th>Descrição</th>
+                    <th>Ícone</th>
+                    <th>Umidade</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    
+        <script id="entry-template" type="text/x-handlebars-template">
+            <tr class="trs">
+                <td>{{hour}}</td>
+                <td>{{temp}}</td>
+                <td>{{temp_min_max}}</td>
+                <td>{{description}}</td>
+                <td><img src="{{url}}" class="table_imgs"></td>
+                <td>{{humidity}}</td>
+            </tr>
+        </script>
+    
+    </body>
+</html>
